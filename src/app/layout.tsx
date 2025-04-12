@@ -1,6 +1,12 @@
-import type { Metadata } from 'next';
+import './globals.css';
 
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+
+import Navbar from '@/components/Navbar';
 import Provider from '@/providers/ReduxProvider';
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Coin List",
@@ -14,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <head>
+        <link rel="icon" type="image/svg" href="/favicon.svg" sizes="any" />
+      </head>
+      <body className={inter.className}>
+        <Navbar />
         <Provider>{children}</Provider>
       </body>
     </html>

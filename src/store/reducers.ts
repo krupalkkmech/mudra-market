@@ -1,4 +1,7 @@
-import { CryptoState } from '@/types/crypto';
+import {
+  CryptoState,
+  ICurrency,
+} from '@/types/crypto';
 import {
   createSlice,
   PayloadAction,
@@ -8,6 +11,7 @@ const initialState: CryptoState = {
   coins: [],
   loading: false,
   error: null,
+  currency: "usd",
 };
 
 const cryptoSlice = createSlice({
@@ -26,9 +30,16 @@ const cryptoSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    setCurrency(state, action: PayloadAction<ICurrency>) {
+      state.currency = action.payload;
+    },
   },
 });
 
-export const { fetchCoinsStart, fetchCoinsSuccess, fetchCoinsFailure } =
-  cryptoSlice.actions;
+export const {
+  fetchCoinsStart,
+  fetchCoinsSuccess,
+  fetchCoinsFailure,
+  setCurrency,
+} = cryptoSlice.actions;
 export default cryptoSlice.reducer;

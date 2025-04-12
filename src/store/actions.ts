@@ -5,14 +5,20 @@ import {
   fetchCoinsStart,
   fetchCoinsSuccess,
 } from './reducers';
-import { AppDispatch } from './store';
+import {
+  AppDispatch,
+  RootState,
+} from './store';
 
-export const getTopCryptos = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(fetchCoinsStart());
-    const coins = await fetchTopCryptos();
-    dispatch(fetchCoinsSuccess(coins));
-  } catch (error: unknown) {
-    dispatch(fetchCoinsFailure((error as Error)?.message || null));
-  }
-};
+export const getTopCryptos =
+  () => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const { currency } = getState().crypto;
+      dispatch(fetchCoinsStart());
+      const coins = await fetchTopCryptos(currency);
+      console.log(coins);
+      dispatch(fetchCoinsSuccess(coins));
+    } catch (error: unknown) {
+      dispatch(fetchCoinsFailure((error as Error)?.message || null));
+    }
+  };
