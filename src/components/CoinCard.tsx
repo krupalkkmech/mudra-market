@@ -1,10 +1,21 @@
 "use client";
 
-import React from 'react';
+import React, {
+  memo,
+  useMemo,
+} from 'react';
 
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from '@/store/reducers';
 import { RootState } from '@/store/store';
 import { ICoin } from '@/types/crypto';
 import { CURRENCIE_MAP } from '@/utils/constants';
@@ -14,7 +25,14 @@ interface CryptoCardProps {
 }
 
 const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
-  const { currency } = useSelector((state: RootState) => state.crypto);
+  const dispatch = useDispatch();
+  const { currency, favorites } = useSelector(
+    (state: RootState) => state.crypto
+  );
+
+  const isFavorite = useMemo(() => {
+    return favorites.some((favorite) => favorite.id === coin.id);
+  }, [favorites, coin.id]);
 
   return (
     <Link
@@ -32,13 +50,20 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
           />
           <h3 className="font-semibold">{coin.name}</h3>
           <span className="text-gray-500 text-sm">
-            {coin.symbol.toUpperCase()}
+            {coin?.symbol?.toUpperCase?.()}
           </span>
         </div>
+
         <button
           onClick={(e) => {
-            e.preventDefault(); // Prevent Link navigation
-            // TODO: Add favorite functionality
+            e.preventDefault();
+            if (isFavorite) {
+              toast.success("Remove from favorites!");
+              dispatch(removeFromFavorites(coin));
+            } else {
+              toast.success("Add to favorites!");
+              dispatch(addToFavorites(coin));
+            }
           }}
           className="mb-2 p-1 hover:text-yellow-400 transition-colors"
           aria-label={`Mark ${coin.name} as favorite`}
@@ -50,6 +75,10 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
             strokeWidth={1.5}
             stroke="currentColor"
             className="w-6 h-6"
+            style={{
+              color: isFavorite ? "#FFD700" : "currentColor",
+              fill: isFavorite ? "#FFD700" : "none",
+            }}
           >
             <path
               strokeLinecap="round"
@@ -82,4 +111,4 @@ const CryptoCard: React.FC<CryptoCardProps> = ({ coin }) => {
   );
 };
 
-export default CryptoCard;
+export default memo(CryptoCard);

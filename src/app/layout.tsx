@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 
 import Navbar from '@/components/Navbar';
 import Provider from '@/providers/ReduxProvider';
@@ -20,12 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" type="image/svg" href="/favicon.svg" sizes="any" />
-      </head>
+      {/* <head>
+        <link rel="icon" type="image/svg+xml" href={icon} sizes="any" />
+      </head> */}
       <body className={inter.className}>
-        <Navbar />
-        <Provider>{children}</Provider>
+        <Provider>
+          <Navbar />
+          {children}
+          <Toaster position="top-center" />
+        </Provider>
       </body>
     </html>
   );

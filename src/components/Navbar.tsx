@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -9,14 +13,55 @@ import {
   MdAccountBalanceWallet,
   MdTrendingUp,
 } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+
+import {
+  fetchFavoritesCoinDetailsBasedonList,
+  fetchLastVisitedCoinDetailsBasedonList,
+} from '@/store/actions';
+import { AppDispatch } from '@/store/store';
+import { Action } from '@reduxjs/toolkit';
 
 export default function Navbar() {
+  const dispatch = useDispatch<AppDispatch>();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleLastVisitedCoinList = useCallback(async () => {
+    const lastVisited = localStorage.getItem("lastVisited");
+    if (lastVisited) {
+      const lastVisitedArray = JSON.parse(lastVisited);
+      if (lastVisitedArray.length > 0) {
+        dispatch(
+          fetchLastVisitedCoinDetailsBasedonList(
+            lastVisitedArray
+          ) as unknown as Action
+        );
+      }
+    }
+  }, [dispatch]);
+
+  const handleFavorites = useCallback(async () => {
+    const favorites = localStorage.getItem("favorites");
+    console.log(favorites);
+    if (favorites) {
+      const favoritesArray = JSON.parse(favorites);
+      if (favoritesArray.length > 0) {
+        dispatch(
+          fetchFavoritesCoinDetailsBasedonList(favoritesArray)
+        ) as unknown as Action;
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleLastVisitedCoinList();
+    handleFavorites();
+  }, [dispatch, handleFavorites, handleLastVisitedCoinList]);
 
   return (
     <nav className="bg-indigo-600 text-white shadow-lg">

@@ -5,6 +5,8 @@ export interface ICryptoState {
   error: string | null;
   currency: ICurrency;
   selectedCoinData: ICoinDetails | null;
+  lastVisited: ICoin[];
+  favorites: ICoin[];
 }
 
 export interface ICoin {

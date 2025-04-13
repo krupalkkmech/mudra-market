@@ -14,7 +14,10 @@ import {
 
 import CurrencySelect from '@/components/CurrencySelect';
 import { getCoinDetails } from '@/store/actions';
-import { setSelectedCoinData } from '@/store/reducers';
+import {
+  addToLastVisited,
+  setSelectedCoinData,
+} from '@/store/reducers';
 import { RootState } from '@/store/store';
 import { ICurrency } from '@/types/crypto';
 import { CURRENCIE_MAP } from '@/utils/constants';
@@ -29,7 +32,7 @@ type Props = {
 const CoinDetails: React.FC<Props> = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { selectedCoinData, loading, currency } = useSelector(
+  const { selectedCoinData, coins, loading, currency } = useSelector(
     (state: RootState) => state.crypto
   );
   const coinId = useMemo(() => params.id as string, [params.id]);
@@ -43,9 +46,15 @@ const CoinDetails: React.FC<Props> = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("coinId", coinId);
-    dispatch(getCoinDetails(coinId) as unknown as Action);
-  }, [coinId, dispatch]);
+    const fetchCoinDetails = async () => {
+      await dispatch(getCoinDetails(coinId) as unknown as Action);
+      const coinData = coins.find((eachCoin) => eachCoin?.id === coinId);
+      if (coinData) {
+        dispatch(addToLastVisited(coinData));
+      }
+    };
+    fetchCoinDetails();
+  }, [coinId, dispatch, coins]);
 
   if (loading) return <div>Loading...</div>;
   if (!selectedCoinData) return <div>Coin not found</div>;

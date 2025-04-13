@@ -8,6 +8,8 @@ import {
   fetchCoinsFailure,
   fetchCoinsStart,
   fetchCoinsSuccess,
+  setFavoritesList,
+  setLastVisitedList,
   setSelectedCoinData,
 } from './reducers';
 import {
@@ -33,7 +35,6 @@ export const getTopCryptos =
         dispatch(fetchCoinsSuccess(searchCoins));
       } else {
         const coins = await fetchTopCryptos(currency);
-        console.log(coins);
         dispatch(fetchCoinsSuccess(coins));
       }
     } catch (error: unknown) {
@@ -44,11 +45,26 @@ export const getTopCryptos =
 export const getCoinDetails =
   (coinId: string) => async (dispatch: AppDispatch) => {
     try {
-      console.log("fdfcdsfds");
       dispatch(fetchCoinsStart());
       const coinDetails = await fetchCoinDetails(coinId);
       dispatch(setSelectedCoinData(coinDetails));
     } catch (error: unknown) {
       dispatch(fetchCoinsFailure((error as Error)?.message || null));
     }
+  };
+
+export const fetchLastVisitedCoinDetailsBasedonList =
+  (coinIds: string[]) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const { currency } = getState().crypto;
+    const searchCoins = await fetchTopCryptos(currency, coinIds);
+    dispatch(setLastVisitedList(searchCoins));
+  };
+
+export const fetchFavoritesCoinDetailsBasedonList =
+  (coinIds: string[]) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const { currency } = getState().crypto;
+    const searchCoins = await fetchTopCryptos(currency, coinIds);
+    dispatch(setFavoritesList(searchCoins));
   };
