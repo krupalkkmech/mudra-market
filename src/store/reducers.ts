@@ -1,5 +1,6 @@
 import {
-  CryptoState,
+  ICoinDetails,
+  ICryptoState,
   ICurrency,
 } from '@/types/crypto';
 import {
@@ -7,11 +8,12 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-const initialState: CryptoState = {
+const initialState: ICryptoState = {
   coins: [],
   loading: false,
   error: null,
   currency: "usd",
+  selectedCoinData: null,
 };
 
 const cryptoSlice = createSlice({
@@ -33,6 +35,10 @@ const cryptoSlice = createSlice({
     setCurrency(state, action: PayloadAction<ICurrency>) {
       state.currency = action.payload;
     },
+    setSelectedCoinData(state, action: PayloadAction<ICoinDetails | null>) {
+      state.selectedCoinData = action.payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -41,5 +47,6 @@ export const {
   fetchCoinsSuccess,
   fetchCoinsFailure,
   setCurrency,
+  setSelectedCoinData,
 } = cryptoSlice.actions;
 export default cryptoSlice.reducer;
