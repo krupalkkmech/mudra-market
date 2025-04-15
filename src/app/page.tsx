@@ -40,6 +40,10 @@ const CryptoList = () => {
     dispatch(setCurrency(currency));
   }, [dispatch, currency]);
 
+  useEffect(() => {
+    dispatch(setCurrency(globalCurrency));
+  }, [dispatch, globalCurrency]);
+
   const displayCoinsCardOrTable = useMemo(() => {
     if (displayMode === "table") {
       return <CoinTable coins={coins} currency={currency} />;
