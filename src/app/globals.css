@@ -6,28 +6,20 @@
   --select-bg: #ffffff;
   --select-text: #111827;
   --select-border: #d1d5db;
-  --input-bg: #ffffff;
-  --input-text: #111827;
-  --input-border: #d1d5db;
 }
 
 [data-theme="dark"] {
   --select-bg: #1f2937;
   --select-text: #f3f4f6;
   --select-border: #4b5563;
-  --input-bg: #1f2937;
-  --input-text: #f3f4f6;
-  --input-border: #4b5563;
 }
 
-select {
+select,
+input,
+tr,
+td,
+th {
   background-color: var(--select-bg);
   color: var(--select-text);
   border-color: var(--select-border);
-}
-
-input {
-  background-color: var(--input-bg);
-  color: var(--input-text);
-  border-color: var(--input-border);
 }

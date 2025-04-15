@@ -17,16 +17,15 @@ const CoinTable: React.FC<Props> = ({ coins, currency }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { favorites } = useSelector((state: RootState) => state.crypto);
+  // const { theme } = useSelector((state: RootState) => state.settings);
 
   return (
     <div className="overflow-x-auto mt-4">
       <table className="min-w-full border-collapse">
-        <thead className="bg-gray-100">
+        <thead>
           <tr>
-            <th className="sticky left-0 bg-gray-100 px-4 py-2 border"></th>
-            <th className="sticky left-[60px] bg-gray-100 px-4 py-2 border">
-              Name
-            </th>
+            <th className="sticky left-0 px-4 py-2 border"></th>
+            <th className="sticky left-[60px] px-4 py-2 border">Name</th>
             <th className="px-4 py-2 border">Symbol</th>
             <th className="px-4 py-2 border">Current Price</th>
             <th className="px-4 py-2 border">24h Change</th>
@@ -38,8 +37,8 @@ const CoinTable: React.FC<Props> = ({ coins, currency }) => {
           {coins.map((coin) => {
             const isFavorite = favorites.some((fav) => fav.id === coin.id);
             return (
-              <tr key={coin.id} className="hover:bg-gray-50">
-                <td className="bg-white px-4 py-2 border">
+              <tr key={coin.id}>
+                <td className="px-4 py-2 border">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -79,7 +78,7 @@ const CoinTable: React.FC<Props> = ({ coins, currency }) => {
                   </button>
                 </td>
                 <td
-                  className="sticky left-[0] bg-white px-4 py-2 border flex items-center cursor-pointer"
+                  className="sticky left-[0] px-4 py-2 border flex items-center cursor-pointer"
                   onClick={() => {
                     router.push(`/coin/${coin.id}`);
                   }}
