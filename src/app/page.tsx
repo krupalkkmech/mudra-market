@@ -58,13 +58,13 @@ const CryptoList = () => {
 
   return (
     <div className="m-[20px]">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end gap-4 mb-4">
         <input
           type="text"
           placeholder="Search coins..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-4 py-2 rounded-md mr-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm"
+          className="w-full sm:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm"
         />
         <CurrencySelect currencyValue={currency} />
       </div>
