@@ -13,7 +13,9 @@ import {
   fetchFavoritesCoinDetailsBasedonList,
   fetchLastVisitedCoinDetailsBasedonList,
 } from "@/store/actions";
+import { setCurrency, setTheme } from "@/store/slices/settingsSlice";
 import { AppDispatch } from "@/store/store";
+import { ICurrency } from "@/types/crypto";
 import { Action } from "@reduxjs/toolkit";
 
 export default function Navbar() {
@@ -56,6 +58,17 @@ export default function Navbar() {
     handleLastVisitedCoinList();
     handleFavorites();
   }, [dispatch, handleFavorites, handleLastVisitedCoinList]);
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      dispatch(setTheme(theme as "light" | "dark"));
+    }
+    const currency = localStorage.getItem("currency");
+    if (currency) {
+      dispatch(setCurrency(currency as ICurrency));
+    }
+  }, [dispatch]);
 
   return (
     <nav className="bg-indigo-600 text-white shadow-lg">
