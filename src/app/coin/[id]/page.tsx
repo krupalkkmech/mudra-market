@@ -9,6 +9,9 @@ import { ICoinDetails } from "@/types/crypto";
 
 import CoinDetailsClient from "./CoinDetailsClient";
 
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
+
 // This is a client component, so we don't need generateStaticParams
 const CoinDetailsPage = () => {
   const params = useParams();
