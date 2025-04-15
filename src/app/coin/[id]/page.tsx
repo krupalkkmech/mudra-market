@@ -9,6 +9,7 @@ import { ICoinDetails } from "@/types/crypto";
 
 import CoinDetailsClient from "./CoinDetailsClient";
 
+// This is a client component, so we don't need generateStaticParams
 const CoinDetailsPage = () => {
   const params = useParams();
   const [coinData, setCoinData] = useState<ICoinDetails | null>(null);
