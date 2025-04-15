@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import cryptoReducer from './reducers';
+import cryptoReducer from "./reducers";
+import settingsReducer from "./slices/settingsSlice";
 
 export const store = configureStore({
   reducer: {
     crypto: cryptoReducer,
+    settings: settingsReducer,
   },
 });
 

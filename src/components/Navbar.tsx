@@ -1,26 +1,20 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { FaBitcoin } from 'react-icons/fa';
-import {
-  MdAccountBalanceWallet,
-  MdTrendingUp,
-} from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaBitcoin } from "react-icons/fa";
+import { IoSettings } from "react-icons/io5";
+import { MdAccountBalanceWallet, MdTrendingUp } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
 import {
   fetchFavoritesCoinDetailsBasedonList,
   fetchLastVisitedCoinDetailsBasedonList,
-} from '@/store/actions';
-import { AppDispatch } from '@/store/store';
-import { Action } from '@reduxjs/toolkit';
+} from "@/store/actions";
+import { AppDispatch } from "@/store/store";
+import { Action } from "@reduxjs/toolkit";
 
 export default function Navbar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -95,6 +89,17 @@ export default function Navbar() {
               <MdAccountBalanceWallet />
               <span>Portfolio</span>
             </Link>
+            <Link
+              href="/settings"
+              className={`flex items-center space-x-1 ${
+                pathname === "/settings"
+                  ? "font-bold border-b-2 border-white"
+                  : "opacity-80 hover:opacity-100"
+              }`}
+            >
+              <IoSettings />
+              <span>Settings</span>
+            </Link>
           </div>
 
           <button
@@ -126,17 +131,39 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className={`block py-2 ${pathname === "/" ? "font-bold" : ""}`}
+          className={`block py-2 flex items-center space-x-2 gap-2 ${
+            pathname === "/" ? "font-bold" : ""
+          }`}
+          onClick={() => {
+            toggleMenu();
+          }}
         >
+          <MdTrendingUp />
           Market
         </Link>
         <Link
           href="/portfolio"
-          className={`block py-2 ${
+          className={`block py-2 flex items-center space-x-2 gap-2 ${
             pathname === "/portfolio" ? "font-bold" : ""
           }`}
+          onClick={() => {
+            toggleMenu();
+          }}
         >
+          <MdAccountBalanceWallet />
           Portfolio
+        </Link>
+        <Link
+          href="/settings"
+          className={`block py-2 flex items-center space-x-2 gap-2 ${
+            pathname === "/settings" ? "font-bold" : ""
+          }`}
+          onClick={() => {
+            toggleMenu();
+          }}
+        >
+          <IoSettings />
+          Settings
         </Link>
       </div>
     </nav>
