@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Remove output: export to allow dynamic routes
+  // Disable static exports since we're using dynamic routes
+  output: undefined,
 };
 
 export default nextConfig;
