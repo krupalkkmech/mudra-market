@@ -14,17 +14,22 @@ import { RootState } from "@/store/store";
 import { Action } from "@reduxjs/toolkit";
 
 const CryptoList = () => {
-  const { coins, loading } = useSelector((state: RootState) => state.crypto);
-  const { currency, displayMode, theme } = useSelector(
-    (state: RootState) => state.settings
+  const { coins, loading, currency } = useSelector(
+    (state: RootState) => state.crypto
   );
+
+  const {
+    currency: globalCurrency,
+    displayMode,
+    theme,
+  } = useSelector((state: RootState) => state.settings);
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     dispatch(getTopCryptos(debouncedSearchTerm) as unknown as Action);
-  }, [dispatch, currency, debouncedSearchTerm]);
+  }, [dispatch, currency, globalCurrency, debouncedSearchTerm]);
 
   useEffect(() => {
     document.documentElement.classList.remove("light", "dark");

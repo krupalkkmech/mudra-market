@@ -2,7 +2,7 @@ import {
   fetchCoinDetails,
   fetchTopCryptos,
   fetchTopCryptosWithSearch,
-} from '@/fetch/api';
+} from "@/fetch/api";
 
 import {
   fetchCoinsFailure,
@@ -11,11 +11,8 @@ import {
   setFavoritesList,
   setLastVisitedList,
   setSelectedCoinData,
-} from './reducers';
-import {
-  AppDispatch,
-  RootState,
-} from './store';
+} from "./reducers";
+import { AppDispatch, RootState } from "./store";
 
 export const getTopCryptos =
   (debouncedSearchTerm: string) =>
