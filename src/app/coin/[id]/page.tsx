@@ -1,35 +1,19 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { useEffect, useMemo, useState } from "react";
 
-import { useParams } from 'next/navigation';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
-import CurrencySelect from '@/components/CurrencySelect';
-import { getCoinDetails } from '@/store/actions';
-import {
-  addToLastVisited,
-  setSelectedCoinData,
-} from '@/store/reducers';
-import { RootState } from '@/store/store';
-import { ICurrency } from '@/types/crypto';
-import { CURRENCIE_MAP } from '@/utils/constants';
-import { Action } from '@reduxjs/toolkit';
+import CurrencySelect from "@/components/CurrencySelect";
+import { getCoinDetails } from "@/store/actions";
+import { addToLastVisited, setSelectedCoinData } from "@/store/reducers";
+import { RootState } from "@/store/store";
+import { ICurrency } from "@/types/crypto";
+import { CURRENCIE_MAP } from "@/utils/constants";
+import { Action } from "@reduxjs/toolkit";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-const CoinDetails: React.FC<Props> = () => {
+const CoinDetails: React.FC = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const { selectedCoinData, coins, loading, currency } = useSelector(
